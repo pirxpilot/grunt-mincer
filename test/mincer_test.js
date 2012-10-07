@@ -20,7 +20,7 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 
-exports['mincer'] = {
+exports['mince'] = {
   setUp: function(done) {
     // setup here
     done();
@@ -28,7 +28,7 @@ exports['mincer'] = {
   'helper': function(test) {
     test.expect(1);
     // tests here
-    test.equal(grunt.helper('mincer'), 'mincer!!!', 'should return the correct value.');
+    test.equal(grunt.helper('mince'), 'mince!!!', 'should return the correct value.');
     test.done();
   }
 };

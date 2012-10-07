@@ -33,5 +33,8 @@
   },
   "keywords": [
     "gruntplugin"
-  ]
+  ],
+  "dependencies": {
+    "mincer": "~0.3.0"
+  }
 }
