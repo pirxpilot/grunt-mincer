@@ -1,7 +1,7 @@
 {
   "name": "grunt-mincer",
   "description": "Use mincer to concatenate your sources.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/pirxpilot/grunt-mincer",
   "author": {
     "name": "Damian Krzeminski",
@@ -29,10 +29,11 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "grunt": "~0.3"
+    "grunt": "~0.3",
+    "grunt-contrib-clean": "~0.3"
   },
   "keywords": [
-    "gruntplugin"
+    "gruntplugin", "mincer"
   ],
   "dependencies": {
     "mincer": "~0.3"
