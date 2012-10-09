@@ -101,8 +101,12 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 any new or changed functionality. Lint and test your code using [grunt][grunt].
 
 ## Release History
-_(Nothing yet)_
+
+0.1.1 / 2012-10-09
+==================
+
+  * Define and use 'mince' grunt helper
 
 ## License
-Copyright (c) 2012 Damian Krzeminski
+Copyright (c) 2012 (pirxpilot) Damian Krzeminski
 Licensed under the MIT license.
