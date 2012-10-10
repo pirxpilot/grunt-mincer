@@ -1,4 +1,4 @@
-# grunt-mincer
+# grunt-mincer [![Build Status](https://secure.travis-ci.org/pirxpilot/grunt-mincer.png)](http://travis-ci.org/pirxpilot/grunt-mincer)
 
 Use [mincer] to concatenate your sources.
 
