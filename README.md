@@ -102,10 +102,7 @@ any new or changed functionality. Lint and test your code using [grunt][grunt].
 
 ## Release History
 
-0.1.1 / 2012-10-09
-==================
-
-  * Define and use 'mince' grunt helper
+See [History.md](/pirxpilot/grunt-mincer/blob/master/History.md)
 
 ## License
 Copyright (c) 2012 (pirxpilot) Damian Krzeminski
