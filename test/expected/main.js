@@ -1,6 +1,6 @@
 
 
-/***  test/fixtures/lib/external  ***/
+/***  test/fixtures/external  ***/
 
 function external() {}
 ;
