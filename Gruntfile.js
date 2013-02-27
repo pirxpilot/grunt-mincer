@@ -8,9 +8,6 @@ module.exports = function(grunt) {
     nodeunit: {
       files: ['test/**/*.js']
     },
-    lint: {
-      files: ['grunt.js', 'tasks/**/*.js', 'test/**/*_test.js']
-    },
     watch: {
       files: '<config:lint.files>',
       tasks: 'default'
@@ -27,6 +24,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
+      files: ['grunt.js', 'tasks/**/*.js', 'test/**/*_test.js'],
       options: {
         curly: true,
         eqeqeq: true,
@@ -39,23 +37,25 @@ module.exports = function(grunt) {
         boss: true,
         eqnull: true,
         node: true,
-        es5: true
+        es5: true,
+        globals: {}
       },
-      globals: {}
     }
   });
 
-  // Load local tasks.
+  // Load mince task
   grunt.loadTasks('tasks');
 
-  // The clean plugin helps in testing.
+  // Load contrib tasks
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.renameTask('test', 'nodeunit');
-  grunt.registerTask('test', 'clean mince nodeunit');
+  grunt.registerTask('test', ['clean', 'mince', 'nodeunit']);
 
   // Default task.
-  grunt.registerTask('default', 'lint test');
+  grunt.registerTask('default', ['jshint', 'test']);
 };
