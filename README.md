@@ -102,6 +102,10 @@ any new or changed functionality. Lint and test your code using [grunt][grunt].
 
 ## Release History
 
+grunt-mincer 0.2 is compatible with grunt 0.3
+grunt-mincer 0.3 and newer is compatible with grunt 0.4
+
+
 See [History.md](/pirxpilot/grunt-mincer/blob/master/History.md)
 
 ## License
