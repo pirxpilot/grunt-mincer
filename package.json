@@ -28,6 +28,9 @@
   "scripts": {
     "test": "grunt test"
   },
+  "dependencies": {
+    "mincer": "~0.4.0"
+  },
   "devDependencies": {
     "grunt": "~0.4.0",
     "grunt-contrib-clean": "~0.4.0",
@@ -35,11 +38,11 @@
     "grunt-contrib-nodeunit": "~0.1.2",
     "grunt-contrib-watch": "~0.2.0"
   },
+  "peerDependencies": {
+    "grunt": "~0.4.0"
+  },
   "keywords": [
     "gruntplugin",
     "mincer"
-  ],
-  "dependencies": {
-    "mincer": "~0.4.0"
-  }
+  ]
 }
