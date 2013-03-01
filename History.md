@@ -1,4 +1,10 @@
 
+0.3.1 / 2013-02-28 
+==================
+
+ * Add peerDependencies for grunt 0.4.0
+ * Markup fixes in README.md
+
 0.3.0 / 2013-02-26 
 ==================
 
