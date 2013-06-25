@@ -14,13 +14,15 @@ exports.init = function(grunt) {
 
   var exports = {};
 
-  exports.mince = function(src, dest, include, fn) {
+  exports.mince = function(src, dest, include, configurator, fn) {
     var environment = new Mincer.Environment(process.cwd()),
       asset;
 
     include.forEach(function(include) {
       environment.appendPath(include);
     });
+
+    if (configurator) { configurator(Mincer); }
 
     asset = environment.findAsset(src);
     if (!asset) {
