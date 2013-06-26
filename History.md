@@ -1,4 +1,9 @@
 
+0.3.2 / 2013-06-25 
+==================
+
+ * Add ability to configure Mincer dynamically (for example to enable 'nib' in stylus engine)
+
 0.3.1 / 2013-02-28 
 ==================
 
