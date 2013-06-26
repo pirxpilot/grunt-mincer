@@ -49,6 +49,11 @@ the output file: ```path.join(destDir, target + '.js')```
 List of directories that are added to [mincer] load path. If you have only one directory it can be
 specified as a single string.
 
+#### configure ```function(mincer)```
+
+Optional configure function that is called before before `compile` phase: allows for configuring
+options for various mincer engines.
+
 ### Config Examples
 
 There are couple of formats you can use to configure mincer task.
@@ -97,6 +102,23 @@ And if you only have one `include` directory you can specify it as string:
 ```
 
 You can use different format for each target.
+
+To configure `StylusEngine` to use `nib`:
+
+```javascript
+'mince': {
+  'main': {
+    include: 'src',
+    destDir: 'build',
+    configure: function(mincer) {
+      var nib = require('nib');
+      mincer.StylusEngine.registerConfigurator(function(stylus) {
+        stylus.use(nib());
+      })
+    }
+  }
+}
+```
 
 ## Contributing
 
