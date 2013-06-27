@@ -14,13 +14,19 @@ exports.init = function(grunt) {
 
   var exports = {};
 
-  exports.mince = function(src, dest, include, configurator, fn) {
+  exports.mince = function(src, dest, include, helpers, configurator, fn) {
     var environment = new Mincer.Environment(process.cwd()),
       asset;
 
     include.forEach(function(include) {
       environment.appendPath(include);
     });
+
+    if (helpers) {
+      Object.keys(helpers).forEach(function (key) {
+        environment.registerHelper(key, helpers[key]);
+      });
+    }
 
     if (configurator) { configurator(Mincer); }
 
