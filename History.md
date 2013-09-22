@@ -1,4 +1,9 @@
 
+0.4.1 / 2013-09-22 
+==================
+
+ * Use `helpers` option to add helpers to environment (from awmckinley fork)
+
 0.4.0 / 2013-09-22 
 ==================
 
