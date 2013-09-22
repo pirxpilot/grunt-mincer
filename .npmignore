@@ -1,3 +1,6 @@
-/node_modules/
 /tmp/
 .travis.yml
+LICENSE-MIT
+History.md
+test
+Gruntfile.js
