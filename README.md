@@ -50,6 +50,11 @@ the output file: ```path.join(destDir, target + '.js')```
 List of directories that are added to [mincer] load path. If you have only one directory it can be
 specified as a single string.
 
+#### helpers ```object```
+
+Use to define helpers functions for EJS module. You can preprocess any resource with EJS as long as
+you use `ejs` extension.
+
 #### engines ```object```
 
 Object with configuration options for each mincer engine.
@@ -121,6 +126,21 @@ and instructs `StylusEngine` to use `nib`.
       'Stylus': function(stylus) {
         stylus.use(require('nib')());
       }
+    }
+  }
+}
+```
+
+You can also define EJS helpers in your gruntfile:
+
+```javascript
+'mince': {
+  'main': {
+    include: 'src',
+    src: 'main.js.ejs',
+    destDir: 'build',
+    helpers: {
+      version: function() { return "3.2.1"; }
     }
   }
 }
