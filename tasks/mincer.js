@@ -28,7 +28,7 @@ module.exports = function(grunt) {
       err;
 
     grunt.log.write('Generating file ' + dest.cyan + '...');
-    err = mince(src, dest, include, engines, configure);
+    err = mince(src, dest, include, options.helpers, engines, configure);
     if (err) {
       grunt.warn(err);
     } else {

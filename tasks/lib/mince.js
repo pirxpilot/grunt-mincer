@@ -14,7 +14,7 @@ exports.init = function(grunt) {
 
   var exports = {};
 
-  exports.mince = function(src, dest, include, engines, configure) {
+  exports.mince = function(src, dest, include, helpers, engines, configure) {
     var environment, asset, err;
 
     function configureEngine(name) {
@@ -33,6 +33,12 @@ exports.init = function(grunt) {
     include.forEach(function(include) {
       environment.appendPath(include);
     });
+
+    if (helpers) {
+      Object.keys(helpers).forEach(function (key) {
+        environment.registerHelper(key, helpers[key]);
+      });
+    }
 
     if (Object.keys(engines).some(configureEngine)) {
       return err;
