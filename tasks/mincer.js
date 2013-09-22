@@ -22,13 +22,14 @@ module.exports = function(grunt) {
     var options = this.data,
       include = toArray(options.include),
       src = options.src || this.target + '.js',
-      engines = options.engines || [],
+      helpers = options.helpers || {},
+      engines = options.engines || {},
       configure = options.configure || function() {},
       dest = options.dest || path.join(options.destDir, this.target + '.js'),
       err;
 
     grunt.log.write('Generating file ' + dest.cyan + '...');
-    err = mince(src, dest, include, options.helpers, engines, configure);
+    err = mince(src, dest, include, helpers, engines, configure);
     if (err) {
       grunt.warn(err);
     } else {

@@ -34,11 +34,9 @@ exports.init = function(grunt) {
       environment.appendPath(include);
     });
 
-    if (helpers) {
-      Object.keys(helpers).forEach(function (key) {
-        environment.registerHelper(key, helpers[key]);
-      });
-    }
+    Object.keys(helpers).forEach(function (key) {
+      environment.registerHelper(key, helpers[key]);
+    });
 
     if (Object.keys(engines).some(configureEngine)) {
       return err;
