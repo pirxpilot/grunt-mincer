@@ -33,7 +33,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      files: ['grunt.js', 'tasks/**/*.js', 'test/**/*_test.js'],
+      files: ['Gruntfile.js', 'tasks/**/*.js', 'test/**/*_test.js'],
       options: {
         curly: true,
         eqeqeq: true,
