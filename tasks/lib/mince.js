@@ -14,7 +14,7 @@ exports.init = function(grunt) {
 
   var exports = {};
 
-  exports.mince = function(src, dest, include, configurator, fn) {
+  exports.mince = function(src, dest, include, configurator) {
     var environment = new Mincer.Environment(process.cwd()),
       asset;
 
@@ -25,18 +25,11 @@ exports.init = function(grunt) {
     if (configurator) { configurator(Mincer); }
 
     asset = environment.findAsset(src);
-    if (!asset) {
-      return fn('Cannot find logical path: ' + src.cyan);
+    if (asset) {
+      grunt.file.write(dest, asset.toString());
+      return true;
     }
 
-    asset.compile(function (err) {
-      if (err) {
-        fn(err);
-      } else {
-        grunt.file.write(dest, asset.toString());
-        fn();
-      }
-    });
   };
 
   return exports;

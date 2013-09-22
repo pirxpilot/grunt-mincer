@@ -22,17 +22,13 @@ module.exports = function(grunt) {
     var options = this.data,
       include = toArray(options.include),
       src = options.src || this.target + '.js',
-      dest = options.dest || path.join(options.destDir, this.target + '.js'),
-      done = this.async();
+      dest = options.dest || path.join(options.destDir, this.target + '.js');
 
     grunt.log.write('Generating file ' + dest.cyan + '...');
-    mince(src, dest, include, options.configure, function(err) {
-      if (err) {
-        grunt.warn(err);
-      } else {
-        grunt.log.ok();
-      }
-      done();
-    });
+    if (mince(src, dest, include, options.configure)) {
+      grunt.log.ok();
+    } else {
+      grunt.warn('Cannot find logical path ' + src.cyan);
+    }
   });
 };
