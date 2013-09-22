@@ -36,7 +36,8 @@
     "grunt-contrib-clean": "~0",
     "grunt-contrib-jshint": "~0",
     "grunt-contrib-nodeunit": "~0",
-    "grunt-contrib-watch": "~0"
+    "grunt-contrib-watch": "~0",
+    "ejs": "~0"
   },
   "peerDependencies": {
     "grunt": "~0.4"

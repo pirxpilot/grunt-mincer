@@ -28,7 +28,15 @@ module.exports = function(grunt) {
         destDir: 'tmp',
         engines: {
           'Coffee': {bare: true},
-          'Stylus': function() { console.log('----------'); }
+          'Stylus': function() {}
+        }
+      },
+      helpers: {
+        include: 'test/fixtures',
+        src: 'version.js.ejs',
+        dest: 'tmp/version.js',
+        helpers: {
+          version: function() { return '3.2.1'; }
         }
       }
     },

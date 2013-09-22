@@ -15,5 +15,15 @@ exports['mince'] = {
     test.equal(expected, actual, 'should mince with engines params');
 
     test.done();
+  },
+
+  'mince helpers': function(test) {
+    test.expect(1);
+
+    var expected = 'console.log("Version: 3.2.1");\n';
+    var actual = grunt.file.read('tmp/version.js');
+    test.equal(expected, actual, 'should use mince helpers in EJS');
+
+    test.done();
   }
 };
