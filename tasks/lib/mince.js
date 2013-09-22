@@ -14,22 +14,35 @@ exports.init = function(grunt) {
 
   var exports = {};
 
-  exports.mince = function(src, dest, include, configurator) {
-    var environment = new Mincer.Environment(process.cwd()),
-      asset;
+  exports.mince = function(src, dest, include, engines, configure) {
+    var environment, asset, err;
 
+    function configureEngine(name) {
+      var engine = Mincer[name + 'Engine'] || Mincer[name],
+        opts = engines[name];
+      if (!engine || typeof engine.configure !== 'function') {
+        err = 'Invalid Mincer engine ' + name.cyan;
+        return true;
+      }
+      engine.configure(opts);
+    }
+
+    configure(Mincer);
+
+    environment = new Mincer.Environment(process.cwd());
     include.forEach(function(include) {
       environment.appendPath(include);
     });
 
-    if (configurator) { configurator(Mincer); }
-
-    asset = environment.findAsset(src);
-    if (asset) {
-      grunt.file.write(dest, asset.toString());
-      return true;
+    if (Object.keys(engines).some(configureEngine)) {
+      return err;
     }
 
+    asset = environment.findAsset(src);
+    if (!asset) {
+      return 'Cannot find logical path ' + src.cyan;
+    }
+    grunt.file.write(dest, asset.toString());
   };
 
   return exports;

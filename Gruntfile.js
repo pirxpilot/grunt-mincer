@@ -21,6 +21,15 @@ module.exports = function(grunt) {
         include: ['test/fixtures', 'test/fixtures/lib'],
         src: 'main.js',
         dest: 'tmp/full.js'
+      },
+      extended: {
+        include: ['test/fixtures', 'test/fixtures/lib'],
+        src: 'main.js',
+        destDir: 'tmp',
+        engines: {
+          'Coffee': {bare: true},
+          'Stylus': function() { console.log('----------'); }
+        }
       }
     },
     jshint: {

@@ -50,10 +50,13 @@ the output file: ```path.join(destDir, target + '.js')```
 List of directories that are added to [mincer] load path. If you have only one directory it can be
 specified as a single string.
 
+#### engines ```object```
+
+Object with configuration options for each mincer engine.
+
 #### configure ```function(mincer)```
 
-Optional configure function that is called before before `compile` phase: allows for configuring
-options for various mincer engines.
+Optional configure function that is called before before `compile` phase: allows for direct access to mincer object.
 
 ### Config Examples
 
@@ -104,7 +107,26 @@ And if you only have one `include` directory you can specify it as string:
 
 You can use different format for each target.
 
-To configure `StylusEngine` to use `nib`:
+
+You can configure Mincer engines: this configures `CoffeeEngine` to use `bare` compilation option,
+and instructs `StylusEngine` to use `nib`.
+
+```javascript
+'mince': {
+  'main': {
+    include: 'src',
+    destDir: 'build',
+    engines: {
+      'Coffee': { bare: true },
+      'Stylus': function(stylus) {
+        stylus.use(require('nib')());
+      }
+    }
+  }
+}
+```
+
+To access `Mincer` directly used `configure` option:
 
 ```javascript
 'mince': {
@@ -112,14 +134,17 @@ To configure `StylusEngine` to use `nib`:
     include: 'src',
     destDir: 'build',
     configure: function(mincer) {
-      var nib = require('nib');
-      mincer.StylusEngine.registerConfigurator(function(stylus) {
-        stylus.use(nib());
-      })
+      // call any mincer functions here
+      mincer.logger.use({
+        error: function(msg) {
+          // set up special error logger
+        }
+      });
     }
   }
 }
 ```
+
 
 ## Contributing
 
