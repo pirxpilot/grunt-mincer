@@ -9,7 +9,7 @@
 
 var path = require('path');
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   'use strict';
 
   var mince = require('./lib/mince').init(grunt).mince;
@@ -20,20 +20,28 @@ module.exports = function(grunt) {
     }
 
     var options = this.data,
-      include = toArray(options.include),
-      src = options.src || this.target + '.js',
-      helpers = options.helpers || {},
-      engines = options.engines || {},
-      configure = options.configure || function() {},
-      dest = options.dest || path.join(options.destDir, this.target + '.js'),
-      err;
+      mincerOptions = {
+        include: toArray(options.include),
+        manifestPath: options.manifestPath || '',
+        src: options.src || this.target + '.js',
+        helpers: options.helpers || {},
+        engines: options.engines || {},
+        configure: options.configure || function () {},
+        dest: options.dest || path.join(options.destDir, this.target + '.js'),
+        minifyjs: options.minifyjs || false,
+        minifycss: options.minifycss || false
+      };
 
-    grunt.log.write('Generating file ' + dest.cyan + '...');
-    err = mince(src, dest, include, helpers, engines, configure);
-    if (err) {
-      grunt.warn(err);
-    } else {
-      grunt.log.ok();
-    }
+    var done = this.async();
+    grunt.log.write('Generating file ' + mincerOptions.dest.cyan + '...');
+    mince(mincerOptions, function (err) {
+      done();
+      if (err) {
+        grunt.warn(err);
+      } else {
+        grunt.log.ok();
+      }
+    });
+
   });
 };

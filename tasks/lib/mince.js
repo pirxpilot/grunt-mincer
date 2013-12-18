@@ -9,17 +9,17 @@
 
 var Mincer = require('mincer');
 
-exports.init = function(grunt) {
+exports.init = function (grunt) {
   'use strict';
 
   var exports = {};
 
-  exports.mince = function(src, dest, include, helpers, engines, configure) {
+  exports.mince = function (options, callback) {
     var environment, asset, err;
 
     function configureEngine(name) {
       var engine = Mincer[name + 'Engine'] || Mincer[name],
-        opts = engines[name];
+        opts = options.engines[name];
       if (!engine || typeof engine.configure !== 'function') {
         err = 'Invalid Mincer engine ' + name.cyan;
         return true;
@@ -27,26 +27,46 @@ exports.init = function(grunt) {
       engine.configure(opts);
     }
 
-    configure(Mincer);
+    options.configure(Mincer);
 
     environment = new Mincer.Environment(process.cwd());
-    include.forEach(function(include) {
+
+    if (options.minifyjs) {
+      environment.jsCompressor = "uglify";
+    }
+
+    if (options.minifycss) {
+      environment.cssCompressor = "csso";
+    }
+
+    options.include.forEach(function (include) {
       environment.appendPath(include);
     });
 
-    Object.keys(helpers).forEach(function (key) {
-      environment.registerHelper(key, helpers[key]);
+    Object.keys(options.helpers).forEach(function (key) {
+      environment.registerHelper(key, options.helpers[key]);
     });
 
-    if (Object.keys(engines).some(configureEngine)) {
-      return err;
+    if (Object.keys(options.engines).some(configureEngine)) {
+      callback(err);
+      return;
     }
 
-    asset = environment.findAsset(src);
-    if (!asset) {
-      return 'Cannot find logical path ' + src.cyan;
+    if (options.manifestPath && options.manifestPath.length > 0) {
+      var manifest = new Mincer.Manifest(environment, options.manifestPath);
+      manifest.compile([options.src], function (err) {
+        callback(err);
+      });
+      return;
     }
-    grunt.file.write(dest, asset.toString());
+
+    asset = environment.findAsset(options.src);
+    if (!asset) {
+      callback('Cannot find logical path ' + options.src.cyan);
+      return;
+    }
+    grunt.file.write(options.dest, asset.toString());
+    callback();
   };
 
   return exports;

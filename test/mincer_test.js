@@ -17,6 +17,17 @@ exports['mince'] = {
     test.done();
   },
 
+  'mince manifest': function(test) {
+    test.expect(3);
+
+    var manifest = grunt.file.readJSON('tmp/manifest/manifest.json');
+    test.ok(manifest.assets, 'manifest is valid');
+    test.ok(manifest.files, 'manifest is valid');
+    test.equal(manifest.assets['main.js'].indexOf('main-'), 0, 'generated asset name starts with original asset name');
+
+    test.done();
+  },
+
   'mince helpers': function(test) {
     test.expect(1);
 
