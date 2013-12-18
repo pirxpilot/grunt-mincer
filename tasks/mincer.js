@@ -27,9 +27,7 @@ module.exports = function (grunt) {
         helpers: options.helpers || {},
         engines: options.engines || {},
         configure: options.configure || function () {},
-        dest: options.dest || path.join(options.destDir, this.target + '.js'),
-        minifyjs: options.minifyjs || false,
-        minifycss: options.minifycss || false
+        dest: options.dest || path.join(options.destDir, this.target + '.js')
       };
 
     var done = this.async();

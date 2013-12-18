@@ -31,14 +31,6 @@ exports.init = function (grunt) {
 
     environment = new Mincer.Environment(process.cwd());
 
-    if (options.minifyjs) {
-      environment.jsCompressor = "uglify";
-    }
-
-    if (options.minifycss) {
-      environment.cssCompressor = "csso";
-    }
-
     options.include.forEach(function (include) {
       environment.appendPath(include);
     });
