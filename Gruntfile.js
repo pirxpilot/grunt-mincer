@@ -31,6 +31,12 @@ module.exports = function(grunt) {
           'Stylus': function() {}
         }
       },
+      manifest: {
+        manifestPath: 'tmp/manifest/manifest.json',
+        include: ['test/fixtures', 'test/fixtures/lib'],
+        src: 'main.js',
+        dest: 'tmp/full.js'
+      },
       helpers: {
         include: 'test/fixtures',
         src: 'version.js.ejs',
