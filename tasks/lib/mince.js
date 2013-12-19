@@ -44,6 +44,14 @@ exports.init = function (grunt) {
       return;
     }
 
+    if (options.jsCompressor) {
+      environment.jsCompressor = options.jsCompressor;
+    }
+
+    if (options.cssCompressor) {
+      environment.cssCompressor = options.cssCompressor;
+    }
+
     if (options.manifestPath && options.manifestPath.length > 0) {
       var manifest = new Mincer.Manifest(environment, options.manifestPath);
       manifest.compile([options.src], function (err) {

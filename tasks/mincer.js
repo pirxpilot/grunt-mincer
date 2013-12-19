@@ -26,6 +26,8 @@ module.exports = function (grunt) {
         src: options.src || this.target + '.js',
         helpers: options.helpers || {},
         engines: options.engines || {},
+        jsCompressor: options.jsCompressor || null,
+        cssCompressor: options.cssCompressor || null,
         configure: options.configure || function () {},
         dest: options.dest || path.join(options.destDir, this.target + '.js')
       };
