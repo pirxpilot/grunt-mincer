@@ -70,6 +70,14 @@ for faster access to assets. Check out [mincer documentation](http://nodeca.gith
 for more information about manifest usafe. If `manifestPath` is set assets are compiled into manifest
 directory, `dest` and `destDir` parameters are ignored.
 
+#### jsCompressor ```string|function(context, data)```
+
+JavaScript compression function or predefined `mincer` js compressor identifier `"uglify"`. If predefined identifier is used - `uglify-js` package needs to be installed. Check out [mincer jsCompressor documentation](http://nodeca.github.io/mincer/#Compressing.prototype.jsCompressor) for more details.
+
+#### cssCompressor ```string|function(context, data)```
+
+CSS compression function or predefined `mincer` css compressor identifier `"csso"`. If predefined identifier is used - `csso` package needs to be installed. Check out [mincer cssCompressor documentation](http://nodeca.github.io/mincer/#Compressing.prototype.cssCompressor) for more details.
+
 ### Config Examples
 
 There are couple of formats you can use to configure mincer task.
