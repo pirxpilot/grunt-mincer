@@ -63,6 +63,13 @@ Object with configuration options for each mincer engine.
 
 Optional configure function that is called before before `compile` phase: allows for direct access to mincer object.
 
+#### manifestPath ```string```
+
+Path to `manifest.json` file that will be generated from assets. It will contain several attributes
+for faster access to assets. Check out [mincer documentation](http://nodeca.github.io/mincer/#Manifest)
+for more information about manifest usafe. If `manifestPath` is set assets are compiled into manifest
+directory, `dest` and `destDir` parameters are ignored.
+
 ### Config Examples
 
 There are couple of formats you can use to configure mincer task.
@@ -106,6 +113,18 @@ And if you only have one `include` directory you can specify it as string:
   'main': {
     include: 'src',
     destDir: 'build'
+  }
+}
+```
+
+Manifest generation:
+
+```javascript
+'mince': {
+  'main': {
+	  manifestPath: 'build/manifest.json',
+    include: 'src',
+    src: 'application.js'
   }
 }
 ```
