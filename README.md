@@ -65,7 +65,10 @@ Optional configure function that is called before before `compile` phase: allows
 
 #### manifestPath ```string```
 
-Path to ```manifest.json``` file that will be generated from assets. It will contain several attributes for faster access to assets. See more information about manifest here: [http://nodeca.github.io/mincer/#Manifest](http://nodeca.github.io/mincer/#Manifest). This parameter will override ```dest/destDir``` parameters, compile and fingerprint assets into manifest directory.
+Path to `manifest.json` file that will be generated from assets. It will contain several attributes
+for faster access to assets. Check out [mincer documentation](http://nodeca.github.io/mincer/#Manifest)
+for more information about manifest usafe. If `manifestPath` is set assets are compiled into manifest
+directory, `dest` and `destDir` parameters are ignored.
 
 ### Config Examples
 
@@ -119,7 +122,7 @@ Manifest generation:
 ```javascript
 'mince': {
   'main': {
-	manifestPath: 'build/manifest.json',
+	  manifestPath: 'build/manifest.json',
     include: 'src',
     src: 'application.js'
   }
