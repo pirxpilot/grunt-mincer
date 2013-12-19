@@ -1,4 +1,9 @@
 
+0.6.0 / 2013-12-18
+==================
+
+ * Expose cssCompressor and jsCompressor functions of mincer
+
 0.5.0 / 2013-12-18
 ==================
 
