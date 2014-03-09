@@ -6,42 +6,28 @@
  * Licensed under the MIT license.
  */
 
-
-var path = require('path');
-
+/*jshint indent:2 */
 module.exports = function (grunt) {
   'use strict';
 
-  var mince = require('./lib/mince').init(grunt).mince;
+  var path = require('path'),
+    helpers = require(path.join(__dirname, 'lib/helpers')).init(grunt);
 
   grunt.registerMultiTask('mince', 'Use mincer to concatenate your files.', function () {
-    function toArray(strOrArray) {
-      return Array.isArray(strOrArray) ? strOrArray : [strOrArray];
-    }
-
-    var options = this.data,
-      mincerOptions = {
-        include: toArray(options.include),
-        manifestPath: options.manifestPath || '',
-        src: options.src || this.target + '.js',
-        helpers: options.helpers || {},
-        engines: options.engines || {},
-        jsCompressor: options.jsCompressor || null,
-        cssCompressor: options.cssCompressor || null,
-        configure: options.configure || function () {},
-        dest: options.dest || path.join(options.destDir, this.target + '.js')
-      };
-
-    var done = this.async();
-    grunt.log.write('Generating file ' + mincerOptions.dest.cyan + '...');
-    mince(mincerOptions, function (err) {
-      done();
-      if (err) {
-        grunt.warn(err);
-      } else {
-        grunt.log.ok();
-      }
+    var options = this.options({
+      include: [],
+      manifestPath: '',
+      helpers: {},
+      engines: {},
+      jsCompressor: null,
+      cssCompressor: null,
+      configure: function () {},
     });
 
+    if(options.manifestPath !== '') {
+      helpers.compileManifest(this.files, options, this);
+    } else {
+      helpers.compileAssets(this.files, options);
+    }
   });
 };
