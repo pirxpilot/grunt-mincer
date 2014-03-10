@@ -6,7 +6,6 @@
  * Licensed under the MIT license.
  */
 
-/*jshint indent:2 */
 module.exports = function (grunt) {
   'use strict';
 

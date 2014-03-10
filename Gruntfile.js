@@ -1,4 +1,3 @@
-/* jshint indent:2, strict: false */
 module.exports = function(grunt) {
 
   // Project configuration.

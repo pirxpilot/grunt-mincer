@@ -1,4 +1,3 @@
-/* jshint indent:2, strict: false */
 var grunt = require('grunt');
 
 exports.mince = {

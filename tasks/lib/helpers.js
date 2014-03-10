@@ -6,7 +6,6 @@
  * Licensed under the MIT license.
  */
 
-/*jshint indent:2 */
 var Mincer = require('mincer'),
   path = require('path');
 
