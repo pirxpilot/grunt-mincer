@@ -27,23 +27,10 @@ Mincer is a [multi task][grunt_multi_task], meaning that grunt will automaticall
 
 ### Overview
 
-Inside your `grunt.js` file, add a section named `mince`.
+Inside your `grunt.js` file, add a section named `mince`. Task targets, files and options may be
+specified according to the grunt Configuring tasks guide.
 
-### Parameters
-
-#### src ```string```
-
-Name of the file to be processed by mincer. It probably contains one or more mincer `require`
-directives. If source is not specified your target name with `.js` suffix will be used.
-
-#### dest ```string```
-
-Output file: this is where mincer is going to dump your concatenated sources.
-
-#### destDir ```string```
-
-If `dest` is not specified `destDir` and the name of your target are used to determine the name of
-the output file: ```path.join(destDir, target + '.js')```
+### Options
 
 #### include ```string|array```
 
@@ -67,8 +54,8 @@ Optional configure function that is called before before `compile` phase: allows
 
 Path to `manifest.json` file that will be generated from assets. It will contain several attributes
 for faster access to assets. Check out [mincer documentation](http://nodeca.github.io/mincer/#Manifest)
-for more information about manifest usafe. If `manifestPath` is set assets are compiled into manifest
-directory, `dest` and `destDir` parameters are ignored.
+for more information about manifest usage. If `manifestPath` is set assets are compiled into this
+directory, the destination information in the files configuration will be ignored.
 
 #### jsCompressor ```string|function(context, data)```
 
@@ -78,38 +65,62 @@ JavaScript compression function or predefined `mincer` js compressor identifier 
 
 CSS compression function or predefined `mincer` css compressor identifier `"csso"`. If predefined identifier is used - `csso` package needs to be installed. Check out [mincer cssCompressor documentation](http://nodeca.github.io/mincer/#Compressing.prototype.cssCompressor) for more details.
 
+### Files
+
+The files on which the task operates can be defined using all the powerful options provided by Grunt.
+See the [Configuring tasks guide](http://gruntjs.com/configuring-tasks#files) for details on the different
+ways to configure the file sets.
+
 ### Config Examples
 
 There are couple of formats you can use to configure mincer task.
 
 ```javascript
-'mince': {
-  'main': {
-    include: ['src', 'module/src'],
-    src: 'main.js',
-    dest: 'build/main.js'
+mince: {
+  main: {
+    options: {
+      include: ["src", "module/src"]
+    },
+    files: {
+      src: "main.js",
+      dest: "build/main.js"
+    }
   }
 }
 ```
 
-You can skip `src` if it has the same basename as your target:
+You can compile multiple assets into one output file:
 
 ```javascript
-'mince': {
-  'main': {
-    include: ['src', 'module/src'],
-    dest: 'build/main.js'
+mince: {
+  main: {
+    options: {
+      include: ["src", "module/src"]
+    },
+    files: {
+      src: ["main.js", "extra.js"],
+      dest: "build/main.js"
+    }
   }
 }
 ```
 
-You can specify `destDir` instead of `dest` if your output file has the same basename as your target:
+You can dynamically build the file mapping:
 
 ```javascript
-'mince': {
-  'main': {
-    include: ['src', 'module/src'],
-    destDir: 'build'
+mince: {
+  main: {
+    options: {
+      include: ["src", "module/src"]
+    },
+    files: [
+      {
+        cwd: "javascripts",
+        src: ["**/*.coffee", "**/*.js", "!**/index.js"],
+        dest: "build/main.js",
+        expand: true
+      }
+    ]
   }
 }
 ```
@@ -117,10 +128,11 @@ You can specify `destDir` instead of `dest` if your output file has the same bas
 And if you only have one `include` directory you can specify it as string:
 
 ```javascript
-'mince': {
-  'main': {
-    include: 'src',
-    destDir: 'build'
+mince: {
+  main: {
+    options: {
+      include: "src"
+    }
   }
 }
 ```
@@ -128,31 +140,45 @@ And if you only have one `include` directory you can specify it as string:
 Manifest generation:
 
 ```javascript
-'mince': {
-  'main': {
-	  manifestPath: 'build/manifest.json',
-    include: 'src',
-    src: 'application.js'
+mince: {
+  main: {
+    options: {
+      include: ["src", "module/src"],
+      manifestPath: "build/manifest.json"
+    },
+    files: [
+      {
+        src: ["**/*.coffee", "**/*.js", "**/*.scss"],
+        dest: "build/"
+      }
+    ]
   }
 }
 ```
 
-You can use different format for each target.
+You can use a different format for each target.
 
 
 You can configure Mincer engines: this configures `CoffeeEngine` to use `bare` compilation option,
 and instructs `StylusEngine` to use `nib`.
 
 ```javascript
-'mince': {
-  'main': {
-    include: 'src',
-    destDir: 'build',
-    engines: {
-      'Coffee': { bare: true },
-      'Stylus': function(stylus) {
-        stylus.use(require('nib')());
+mince: {
+  main: {
+    options: {
+      include: "src",
+      engines: {
+        Coffee: {
+          bare: true
+        },
+        Stylus: function(stylus) {
+          stylus.use(require("nib")());
+        }
       }
+    },
+    files: {
+      src: "main.js",
+      dest: "build/main.js"
     }
   }
 }
@@ -161,13 +187,19 @@ and instructs `StylusEngine` to use `nib`.
 You can also define EJS helpers in your gruntfile:
 
 ```javascript
-'mince': {
-  'main': {
-    include: 'src',
-    src: 'main.js.ejs',
-    destDir: 'build',
-    helpers: {
-      version: function() { return "3.2.1"; }
+mince: {
+  main: {
+    options: {
+      include: "src",
+      helpers: {
+        version: function() {
+          return "3.2.1";
+        }
+      }
+    },
+    files: {
+      src: "main.js.ejs",
+      dest: "build/main.js"
     }
   }
 }
@@ -176,17 +208,19 @@ You can also define EJS helpers in your gruntfile:
 To access `Mincer` directly used `configure` option:
 
 ```javascript
-'mince': {
-  'main': {
-    include: 'src',
-    destDir: 'build',
-    configure: function(mincer) {
-      // call any mincer functions here
-      mincer.logger.use({
-        error: function(msg) {
-          // set up special error logger
-        }
-      });
+mince: {
+  main: {
+    options: {
+      include: "src",
+      configure: function(mincer) {
+        mincer.logger.use({
+          error: function(msg) {}
+        });
+      }
+    },
+    files: {
+      src: "main.js.ejs",
+      dest: "build/main.js"
     }
   }
 }

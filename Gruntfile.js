@@ -14,36 +14,56 @@ module.exports = function(grunt) {
     },
     mince: {
       main: {
-        include: ['test/fixtures', 'test/fixtures/lib'],
-        destDir: 'tmp'
+        options: {
+          include: ['test/fixtures', 'test/fixtures/lib'],
+        },
+        files: [
+          { src: 'test/fixtures/main.js', dest: 'tmp/', flatten: true, expand: true }
+        ]
       },
       full: {
-        include: ['test/fixtures', 'test/fixtures/lib'],
-        src: 'main.js',
-        dest: 'tmp/full.js'
+        options: {
+          include: ['test/fixtures', 'test/fixtures/lib']
+        },
+        files: [{
+          src: 'test/fixtures/main.js',
+          dest: 'tmp/full.js'
+        }]
       },
       extended: {
-        include: ['test/fixtures', 'test/fixtures/lib'],
-        src: 'main.js',
-        destDir: 'tmp',
-        engines: {
-          'Coffee': {bare: true},
-          'Stylus': function() {}
-        }
+        options: {
+          include: ['test/fixtures', 'test/fixtures/lib'],
+          engines: {
+            'Coffee': {bare: true},
+            'Stylus': function() {}
+          }
+        },
+        files: [{
+          src: 'test/fixtures/main.js',
+          dest: 'tmp/extended.js',
+        }]
       },
       manifest: {
-        manifestPath: 'tmp/manifest/manifest.json',
-        include: ['test/fixtures', 'test/fixtures/lib'],
-        src: 'main.js',
-        dest: 'tmp/full.js'
+        options: {
+          manifestPath: 'tmp/manifest/manifest.json',
+          include: ['test/fixtures', 'test/fixtures/lib'],
+        },
+        files: [{
+          src: 'test/fixtures/main.js',
+          dest: 'tmp/mainfest.js'
+        }]
       },
       helpers: {
-        include: 'test/fixtures',
-        src: 'version.js.ejs',
-        dest: 'tmp/version.js',
-        helpers: {
-          version: function() { return '3.2.1'; }
-        }
+        options: {
+          include: 'test/fixtures',
+          helpers: {
+            version: function() { return '3.2.1'; }
+          }
+        },
+        files: [{
+          src: 'test/fixtures/version.js.ejs',
+          dest: 'tmp/version.js'
+        }]
       }
     },
     jshint: {

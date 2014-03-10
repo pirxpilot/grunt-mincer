@@ -1,6 +1,6 @@
 var grunt = require('grunt');
 
-exports['mince'] = {
+exports.mince = {
   'mince': function(test) {
     test.expect(3);
 
