@@ -1,4 +1,9 @@
 
+1.0.0-beta / 2014-03-10 
+==================
+
+ * Reworked the task configuration to conform to the Grunt configuring tasks guide.
+
 0.6.0 / 2013-12-18
 ==================
 
