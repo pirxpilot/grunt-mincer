@@ -31,7 +31,7 @@ exports.mince = {
   'mince helpers': function(test) {
     test.expect(1);
 
-    var expected = 'console.log("Version: 3.2.1");\n';
+    var expected = 'console.log("Version: 3.2.1");';
     var actual = grunt.file.read('tmp/version.js');
     test.equal(expected, actual, 'should use mince helpers in EJS');
 
