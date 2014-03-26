@@ -18,6 +18,16 @@ exports.init = function (grunt) {
     return self.indexOf(value) === index;
   };
 
+  var logicalAssetName = function(environment, filename) {
+    var engines = environment.getEngines();
+
+    var parts = path.basename(filename).split('.');
+    while(engines.hasOwnProperty('.' + parts.slice(-1)[0])) {
+      parts.pop();
+    }
+    return parts.join('.');
+  };
+
   var mince = function (src, options) {
     var environment, asset, err;
 
@@ -56,8 +66,11 @@ exports.init = function (grunt) {
     }
 
     if (options.manifestPath && options.manifestPath.length > 0) {
+      var resolvedAssets = src.map(function(filepath) {
+        return logicalAssetName(environment, filepath);
+      });
       var manifest = new Mincer.Manifest(environment, options.manifestPath);
-      return manifest.compile(src);
+      return manifest.compile(resolvedAssets);
     }
 
     asset = environment.findAsset(path.basename(src));
