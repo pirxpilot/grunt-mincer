@@ -1,4 +1,11 @@
 
+1.0.0-beta2 / 2014-03-26 
+==================
+
+ * Strip known engine extensions from source list for manifests
+ * Adjust test output for changes in mincer 1.0
+ * Upgrade dependency to use mincer 1.0
+
 1.0.0-beta / 2014-03-10 
 ==================
 
