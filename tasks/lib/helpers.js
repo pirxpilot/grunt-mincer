@@ -18,15 +18,14 @@ exports.init = function (grunt) {
     return self.indexOf(value) === index;
   };
 
-  var mince = function (src, options, callback) {
+  var mince = function (src, options) {
     var environment, asset, err;
 
     function configureEngine(name) {
       var engine = Mincer[name + 'Engine'] || Mincer[name],
         opts = options.engines[name];
       if (!engine || typeof engine.configure !== 'function') {
-        err = 'Invalid Mincer engine ' + name.cyan;
-        return true;
+        grunt.fail.warn('Invalid Mincer engine ' + name.cyan);
       }
       engine.configure(opts);
     }
@@ -45,7 +44,6 @@ exports.init = function (grunt) {
     });
 
     if (Object.keys(options.engines).some(configureEngine)) {
-      callback(err);
       return;
     }
 
@@ -59,24 +57,18 @@ exports.init = function (grunt) {
 
     if (options.manifestPath && options.manifestPath.length > 0) {
       var manifest = new Mincer.Manifest(environment, options.manifestPath);
-      manifest.compile(src, function (err, assetData) {
-        callback(err, assetData);
-      });
-      return;
+      return manifest.compile(src);
     }
 
     asset = environment.findAsset(path.basename(src));
     if (!asset) {
-      callback('Cannot find logical path ' + src.cyan);
-      return;
+      grunt.fail.warn('Cannot find logical path ' + src.cyan);
     }
-    callback(err, asset.toString());
-    return;
+    return asset.toString();
   };
 
-  exports.compileManifest = function(files, options, task) {
-    var done = task.async(),
-      inputFiles = [],
+  exports.compileManifest = function(files, options) {
+    var inputFiles = [],
       includePaths = options.include;
 
     files.forEach(function(file) {
@@ -94,21 +86,18 @@ exports.init = function (grunt) {
       grunt.log.warn('Banner option is not supported when compiling to manifest.');
     }
 
-    mince(inputFiles.filter(arrayUnique), options, function(err, assetData) {
-      done();
-      if(err) {
-        grunt.fail.warn(err);
+    var assetData = mince(inputFiles.filter(arrayUnique), options);
+    if(typeof assetData === 'object') {
+      if (options.verbose && assetData.assets) {
+        Object.keys(assetData.assets).forEach(function (src) {
+          grunt.log.writeln('File ' + src + ' written to: ' + assetData.assets[src]);
+        });
+      } else {
+        grunt.log.writeln('Manifest written to: ' + options.manifestPath.cyan);
       }
-      if(typeof assetData === 'object') {
-        if (options.verbose && assetData.assets) {
-          Object.keys(assetData.assets).forEach(function (src) {
-            grunt.log.writeln('File ' + src + ' written to: ' + assetData.assets[src]);
-          });
-        } else {
-          grunt.log.writeln('Manifest written to: ' + options.manifestPath.cyan);
-        }
-      }
-    });
+    } else {
+      grunt.fail.warn('Error compiling manifest:' + options.manifestPath.cyan);
+    }
   };
 
   exports.compileAssets = function(files, options) {
@@ -125,13 +114,8 @@ exports.init = function (grunt) {
       });
 
       valid.forEach(function (file) {
-        mince(file, options, function(err, assetData) {
-          if(err) {
-            grunt.fail.warn(err);
-          } else {
-            output.push(assetData);
-          }
-        });
+        var assetData = mince(file, options);
+        output.push(assetData);
       });
 
       if (output.length === 0) {

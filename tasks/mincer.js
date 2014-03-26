@@ -24,7 +24,7 @@ module.exports = function (grunt) {
     });
 
     if(options.manifestPath !== '') {
-      helpers.compileManifest(this.files, options, this);
+      helpers.compileManifest(this.files, options);
     } else {
       helpers.compileAssets(this.files, options);
     }

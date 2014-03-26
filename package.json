@@ -27,7 +27,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "mincer": "~0.5"
+    "mincer": "~1.0"
   },
   "devDependencies": {
     "grunt": "~0.4",
