@@ -144,7 +144,12 @@ mince: {
   main: {
     options: {
       include: ["src", "module/src"],
-      manifestPath: "build/manifest.json"
+      manifestPath: "build/manifest.json",
+      manifestOptions: {
+        compress: false,
+        sourceMaps: false,
+        embedMappingComments: false
+      }
     },
     files: [
       {
@@ -156,8 +161,14 @@ mince: {
 }
 ```
 
-You can use a different format for each target.
+By setting the `manifestPath` you enable compiling and writing the assets to the given directory. The
+assets will be written to fingerprinted files. Optionally you can specify `manifestOptions`. This object
+will be passed through to mincer unmodified. See the [mincer documentation][manifest_options] for supported options.
+The defaults are to disable compression and source maps.
 
+[manifest_options]: http://nodeca.github.io/mincer/#Manifest.prototype.compile
+
+You can use a different format for each target.
 
 You can configure Mincer engines: this configures `CoffeeEngine` to use `bare` compilation option,
 and instructs `StylusEngine` to use `nib`.
