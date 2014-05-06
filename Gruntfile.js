@@ -46,11 +46,16 @@ module.exports = function(grunt) {
       manifest: {
         options: {
           manifestPath: 'tmp/manifest/manifest.json',
+          manifestOptions: {
+            compress: false,
+            sourceMaps: true,
+            embedMappingComments: true
+          },
           include: ['test/fixtures', 'test/fixtures/lib'],
         },
         files: [{
-          src: 'test/fixtures/main.js',
-          dest: 'tmp/mainfest.js'
+          src: 'test/fixtures/main.css.less',
+          dest: 'tmp/main.css'
         }]
       },
       helpers: {

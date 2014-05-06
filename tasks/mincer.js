@@ -16,6 +16,11 @@ module.exports = function (grunt) {
     var options = this.options({
       include: [],
       manifestPath: '',
+      manifestOptions: {
+        compress: true,
+        sourceMaps: true,
+        embedMappingComments: true
+      },
       helpers: {},
       engines: {},
       jsCompressor: null,

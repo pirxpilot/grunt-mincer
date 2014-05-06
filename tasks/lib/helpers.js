@@ -69,8 +69,13 @@ exports.init = function (grunt) {
       var resolvedAssets = src.map(function(filepath) {
         return logicalAssetName(environment, filepath);
       });
+
+      if ((options.manifestOptions.sourceMaps !== null) && options.manifestOptions.sourceMaps) {
+        environment.enable('source_maps');
+      }
+
       var manifest = new Mincer.Manifest(environment, options.manifestPath);
-      return manifest.compile(resolvedAssets);
+      return manifest.compile(resolvedAssets, options.manifestOptions);
     }
 
     asset = environment.findAsset(path.basename(src));
