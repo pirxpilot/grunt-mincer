@@ -37,6 +37,10 @@ specified according to the grunt Configuring tasks guide.
 List of directories that are added to [mincer] load path. If you have only one directory it can be
 specified as a single string.
 
+#### enable ```string|array```
+
+List of configurations like `autoprefixer` or `source_maps` that should be enabled in [mincer]'s environment.
+
 #### helpers ```object```
 
 Use to define helpers functions for EJS module. You can preprocess any resource with EJS as long as
