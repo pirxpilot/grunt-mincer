@@ -44,6 +44,12 @@ exports.init = function (grunt) {
 
     environment = new Mincer.Environment(process.cwd());
 
+    if (options.enable) {
+      [].concat(options.enable).forEach(function (configuration) {
+        environment.enable(configuration);
+      });
+    }
+
     [].concat(options.include).forEach(function (include) {
       environment.appendPath(include);
     });
