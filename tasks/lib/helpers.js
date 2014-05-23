@@ -50,7 +50,11 @@ exports.init = function (grunt) {
     environment.appendPath(path.dirname(src));
 
     Object.keys(options.helpers).forEach(function (key) {
-      environment.registerHelper(key, options.helpers[key]);
+      // Create a bound function which has access to the current Mincer.Environment
+      var helper = options.helpers[key].bind({
+        environment: environment
+      });
+      environment.registerHelper(key, helper);
     });
 
     if (Object.keys(options.engines).some(configureEngine)) {
