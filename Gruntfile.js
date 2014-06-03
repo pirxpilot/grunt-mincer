@@ -49,7 +49,7 @@ module.exports = function(grunt) {
           include: ['test/fixtures', 'test/fixtures/lib'],
         },
         files: [{
-          src: 'test/fixtures/main.js',
+          src: ['test/fixtures/main.js', 'test/fixtures/lib/external.js'],
           dest: 'tmp/mainfest.js'
         }]
       },
