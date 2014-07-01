@@ -9,7 +9,6 @@
 var Mincer = require('mincer'),
   path = require('path'),
   SourceMapConsumer = require('source-map').SourceMapConsumer,
-  SourceMapGenerator = require('source-map').SourceMapGenerator,
   SourceNode = require('source-map').SourceNode;
 
 exports.init = function (grunt) {
@@ -58,7 +57,6 @@ exports.init = function (grunt) {
     options.configure(Mincer);
 
     environment = new Mincer.Environment(process.cwd());
-    environment.enable('source_maps');
 
     if (options.enable) {
       [].concat(options.enable).forEach(function (configuration) {
@@ -175,8 +173,23 @@ exports.init = function (grunt) {
           sourceNode.add('\n');
         }
       });
-      grunt.file.write(file.dest, sourceNode.toString());
+
+      var mappedOutput = sourceNode.toStringWithSourceMap({
+        file: file.dest,
+        sourceRoot: ''
+      });
+
+      grunt.file.write(file.dest, mappedOutput.code.toString());
       grunt.log.writeln('File ' + file.dest.cyan + ' created...');
+
+      if(options.enable) {
+        if([].concat(options.enable).indexOf('source_maps') > -1) {
+          var mapFile = file.dest + '.map';
+          grunt.file.write(mapFile, mappedOutput.map.toString());
+          grunt.log.writeln('File ' + mapFile.cyan + ' created...');
+        }
+      }
+
     });
   };
 
