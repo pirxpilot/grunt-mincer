@@ -174,6 +174,14 @@ exports.init = function (grunt) {
         }
       });
 
+      if([].concat(options.enable).indexOf('source_maps') > -1) {
+        if (/\.css$/.test(file.dest)) {
+          sourceNode.add('/*# sourceMappingURL=' + options.sourceMappingBaseURL + file.dest + '.map' + ' */');
+        } else {
+          sourceNode.add('//# sourceMappingURL=' + options.sourceMappingBaseURL + file.dest + '.map');
+        }
+      }
+
       var mappedOutput = sourceNode.toStringWithSourceMap({
         file: file.dest,
         sourceRoot: ''
@@ -182,14 +190,11 @@ exports.init = function (grunt) {
       grunt.file.write(file.dest, mappedOutput.code.toString());
       grunt.log.writeln('File ' + file.dest.cyan + ' created...');
 
-      if(options.enable) {
-        if([].concat(options.enable).indexOf('source_maps') > -1) {
-          var mapFile = file.dest + '.map';
-          grunt.file.write(mapFile, mappedOutput.map.toString());
-          grunt.log.writeln('File ' + mapFile.cyan + ' created...');
-        }
+      if([].concat(options.enable).indexOf('source_maps') > -1) {
+        var mapFile = file.dest + '.map';
+        grunt.file.write(mapFile, mappedOutput.map.toString());
+        grunt.log.writeln('File ' + mapFile.cyan + ' created...');
       }
-
     });
   };
 

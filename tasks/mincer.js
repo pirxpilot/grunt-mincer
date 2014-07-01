@@ -22,6 +22,7 @@ module.exports = function (grunt) {
         sourceMaps: true,
         embedMappingComments: true
       },
+      sourceMappingBaseURL: '',
       helpers: {},
       engines: {},
       jsCompressor: null,
