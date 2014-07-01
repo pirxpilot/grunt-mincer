@@ -69,6 +69,10 @@ JavaScript compression function or predefined `mincer` js compressor identifier 
 
 CSS compression function or predefined `mincer` css compressor identifier `"csso"`. If predefined identifier is used - `csso` package needs to be installed. Check out [mincer cssCompressor documentation](http://nodeca.github.io/mincer/#Compressing.prototype.cssCompressor) for more details.
 
+#### sourceMappingBaseURL ```string```
+
+The base url to use when referencing source-maps in compiled assets. Defaults to `""` if not explicitly set.
+
 ### Files
 
 The files on which the task operates can be defined using all the powerful options provided by Grunt.
