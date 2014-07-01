@@ -15,6 +15,7 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('mince', 'Use mincer to concatenate your files.', function () {
     var options = this.options({
       include: [],
+      enable: [],
       manifestPath: '',
       manifestOptions: {
         compress: true,

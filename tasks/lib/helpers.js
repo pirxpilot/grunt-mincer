@@ -19,9 +19,21 @@ exports.init = function (grunt) {
   };
 
   var logicalAssetName = function(environment, filename) {
-    var engines = environment.getEngines();
+    var engines = environment.getEngines(),
+      resolvedFilename = path.resolve(filename),
+      _path, _i, _len;
 
-    var parts = path.basename(filename).split('.');
+    for (_i = 0, _len = environment.paths.length; _i < _len; _i++) {
+      _path = environment.paths[_i];
+      if(_path.slice(-1, 1) !== '/') {
+        _path += '/';
+      }
+      if(resolvedFilename.slice(0, _path.length) === _path) {
+        resolvedFilename = resolvedFilename.slice(_path.length);
+        break;
+      }
+    }
+    var parts = resolvedFilename.split('.');
     while(engines.hasOwnProperty('.' + parts.slice(-1)[0])) {
       parts.pop();
     }
@@ -44,13 +56,22 @@ exports.init = function (grunt) {
 
     environment = new Mincer.Environment(process.cwd());
 
+    if (options.enable) {
+      [].concat(options.enable).forEach(function (configuration) {
+        environment.enable(configuration);
+      });
+    }
+
     [].concat(options.include).forEach(function (include) {
       environment.appendPath(include);
     });
-    environment.appendPath(path.dirname(src));
 
     Object.keys(options.helpers).forEach(function (key) {
-      environment.registerHelper(key, options.helpers[key]);
+      // Create a bound function which has access to the current Mincer.Environment
+      var helper = options.helpers[key].bind({
+        environment: environment
+      });
+      environment.registerHelper(key, helper);
     });
 
     if (Object.keys(options.engines).some(configureEngine)) {
@@ -86,19 +107,13 @@ exports.init = function (grunt) {
   };
 
   exports.compileManifest = function(files, options) {
-    var inputFiles = [],
-      includePaths = options.include;
+    var inputFiles = [];
 
     files.forEach(function(file) {
       inputFiles = inputFiles.concat(file.src.map(function(filepath) {
-        return path.basename(filepath);
-      }));
-      includePaths = includePaths.concat(file.src.map(function(filepath) {
-        return path.dirname(filepath);
+        return filepath;
       }));
     });
-
-    options.include = includePaths.filter(arrayUnique);
 
     if (options.banner) {
       grunt.log.warn('Banner option is not supported when compiling to manifest.');

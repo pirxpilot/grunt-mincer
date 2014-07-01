@@ -46,6 +46,16 @@ module.exports = function(grunt) {
       manifest: {
         options: {
           manifestPath: 'tmp/manifest/manifest.json',
+          include: ['test/fixtures', 'test/fixtures/lib'],
+        },
+        files: [{
+          src: ['test/fixtures/main.js', 'test/fixtures/lib/external.js'],
+          dest: 'tmp/mainfest.js'
+        }]
+      },
+      manifestmap: {
+        options: {
+          manifestPath: 'tmp/manifest/manifest.json',
           manifestOptions: {
             compress: false,
             sourceMaps: true,
