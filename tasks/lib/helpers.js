@@ -7,7 +7,10 @@
  */
 
 var Mincer = require('mincer'),
-  path = require('path');
+  path = require('path'),
+  SourceMapConsumer = require('source-map').SourceMapConsumer,
+  SourceMapGenerator = require('source-map').SourceMapGenerator,
+  SourceNode = require('source-map').SourceNode;
 
 exports.init = function (grunt) {
   'use strict';
@@ -55,6 +58,7 @@ exports.init = function (grunt) {
     options.configure(Mincer);
 
     environment = new Mincer.Environment(process.cwd());
+    environment.enable('source_maps');
 
     if (options.enable) {
       [].concat(options.enable).forEach(function (configuration) {
@@ -103,7 +107,7 @@ exports.init = function (grunt) {
     if (!asset) {
       grunt.fail.warn('Cannot find logical path ' + src.cyan);
     }
-    return asset.toString();
+    return asset;
   };
 
   exports.compileManifest = function(files, options) {
@@ -136,6 +140,7 @@ exports.init = function (grunt) {
   exports.compileAssets = function(files, options) {
     files.forEach(function (file) {
       var output = [];
+      var sourceNode = new SourceNode();
       var valid = file.src.filter(function(filepath) {
         // Warn on and remove invalid source files (if nonull was set).
         if (!grunt.file.exists(filepath)) {
@@ -156,10 +161,21 @@ exports.init = function (grunt) {
       }
 
       if (options.banner) {
-        output.unshift(options.banner + grunt.util.linefeed);
+        sourceNode.add(options.banner);
+        sourceNode.add(grunt.util.linefeed);
       }
 
-      grunt.file.write(file.dest, output.join(''));
+      output.forEach(function(asset) {
+        if(asset.sourceMap && asset.sourceMap.mappings !== '') {
+          sourceNode.add(SourceNode.fromStringWithSourceMap(asset.toString(), new SourceMapConsumer(asset.sourceMap)));
+        } else {
+          asset.toString().split('\n').forEach(function(line, j){
+            sourceNode.add(new SourceNode(j + 1, 0, asset.relativePath, line + '\n'));
+          });
+          sourceNode.add('\n');
+        }
+      });
+      grunt.file.write(file.dest, sourceNode.toString());
       grunt.log.writeln('File ' + file.dest.cyan + ' created...');
     });
   };
