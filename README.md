@@ -89,10 +89,10 @@ mince: {
     options: {
       include: ["src", "module/src"]
     },
-    files: {
+    files: [{
       src: "main.js",
       dest: "build/main.js"
-    }
+    }]
   }
 }
 ```
@@ -105,10 +105,10 @@ mince: {
     options: {
       include: ["src", "module/src"]
     },
-    files: {
+    files: [{
       src: ["main.js", "extra.js"],
       dest: "build/main.js"
-    }
+    }]
   }
 }
 ```
@@ -195,10 +195,10 @@ mince: {
         }
       }
     },
-    files: {
+    files: [{
       src: "main.js",
       dest: "build/main.js"
-    }
+    }]
   }
 }
 ```
@@ -216,10 +216,10 @@ mince: {
         }
       }
     },
-    files: {
+    files: [{
       src: "main.js.ejs",
       dest: "build/main.js"
-    }
+    }]
   }
 }
 ```
@@ -237,10 +237,10 @@ mince: {
         });
       }
     },
-    files: {
+    files: [{
       src: "main.js.ejs",
       dest: "build/main.js"
-    }
+    }]
   }
 }
 ```
