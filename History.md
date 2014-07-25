@@ -1,4 +1,16 @@
 
+1.0.0-beta3 / 2014-07-25
+==================
+
+ * SourceMap support for dedicated files and manifest mode
+ * Perform asset concatenation using SourceNode
+ * Keep the subdirectory information when compiling a manifest
+ * Access to the Mincer.Environment for helpers
+ * Add `enable` option for custom configurations
+ * Bump mincer dependency to 1.1
+ * Test on node 0.10.x
+ * Updated code examples
+
 1.0.0-beta2 / 2014-03-26 
 ==================
 
