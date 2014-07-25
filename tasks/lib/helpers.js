@@ -7,7 +7,9 @@
  */
 
 var Mincer = require('mincer'),
-  path = require('path');
+  path = require('path'),
+  SourceMapConsumer = require('source-map').SourceMapConsumer,
+  SourceNode = require('source-map').SourceNode;
 
 exports.init = function (grunt) {
   'use strict';
@@ -90,15 +92,20 @@ exports.init = function (grunt) {
       var resolvedAssets = src.map(function(filepath) {
         return logicalAssetName(environment, filepath);
       });
+
+      if ((options.manifestOptions.sourceMaps !== null) && options.manifestOptions.sourceMaps) {
+        environment.enable('source_maps');
+      }
+
       var manifest = new Mincer.Manifest(environment, options.manifestPath);
-      return manifest.compile(resolvedAssets);
+      return manifest.compile(resolvedAssets, options.manifestOptions);
     }
 
     asset = environment.findAsset(path.basename(src));
     if (!asset) {
       grunt.fail.warn('Cannot find logical path ' + src.cyan);
     }
-    return asset.toString();
+    return asset;
   };
 
   exports.compileManifest = function(files, options) {
@@ -131,6 +138,7 @@ exports.init = function (grunt) {
   exports.compileAssets = function(files, options) {
     files.forEach(function (file) {
       var output = [];
+      var sourceNode = new SourceNode();
       var valid = file.src.filter(function(filepath) {
         // Warn on and remove invalid source files (if nonull was set).
         if (!grunt.file.exists(filepath)) {
@@ -151,11 +159,42 @@ exports.init = function (grunt) {
       }
 
       if (options.banner) {
-        output.unshift(options.banner + grunt.util.linefeed);
+        sourceNode.add(options.banner);
+        sourceNode.add(grunt.util.linefeed);
       }
 
-      grunt.file.write(file.dest, output.join(''));
+      output.forEach(function(asset) {
+        if(asset.sourceMap && asset.sourceMap.mappings !== '') {
+          sourceNode.add(SourceNode.fromStringWithSourceMap(asset.toString(), new SourceMapConsumer(asset.sourceMap)));
+        } else {
+          asset.toString().split('\n').forEach(function(line, j){
+            sourceNode.add(new SourceNode(j + 1, 0, asset.relativePath, line + '\n'));
+          });
+          sourceNode.add('\n');
+        }
+      });
+
+      if([].concat(options.enable).indexOf('source_maps') > -1) {
+        if (/\.css$/.test(file.dest)) {
+          sourceNode.add('/*# sourceMappingURL=' + options.sourceMappingBaseURL + file.dest + '.map' + ' */');
+        } else {
+          sourceNode.add('//# sourceMappingURL=' + options.sourceMappingBaseURL + file.dest + '.map');
+        }
+      }
+
+      var mappedOutput = sourceNode.toStringWithSourceMap({
+        file: file.dest,
+        sourceRoot: ''
+      });
+
+      grunt.file.write(file.dest, mappedOutput.code.toString());
       grunt.log.writeln('File ' + file.dest.cyan + ' created...');
+
+      if([].concat(options.enable).indexOf('source_maps') > -1) {
+        var mapFile = file.dest + '.map';
+        grunt.file.write(mapFile, mappedOutput.map.toString());
+        grunt.log.writeln('File ' + mapFile.cyan + ' created...');
+      }
     });
   };
 

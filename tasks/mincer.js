@@ -17,6 +17,12 @@ module.exports = function (grunt) {
       include: [],
       enable: [],
       manifestPath: '',
+      manifestOptions: {
+        compress: true,
+        sourceMaps: true,
+        embedMappingComments: true
+      },
+      sourceMappingBaseURL: '',
       helpers: {},
       engines: {},
       jsCompressor: null,

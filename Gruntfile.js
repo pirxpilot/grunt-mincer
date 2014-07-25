@@ -43,6 +43,16 @@ module.exports = function(grunt) {
           dest: 'tmp/extended.js',
         }]
       },
+      sourcemap: {
+        options: {
+          include: ['test/fixtures', 'test/fixtures/lib'],
+          enable: ['source_maps']
+        },
+        files: [{
+          src: 'test/fixtures/main.css.less',
+          dest: 'tmp/main.css'
+        }]
+      },
       manifest: {
         options: {
           manifestPath: 'tmp/manifest/manifest.json',
@@ -51,6 +61,21 @@ module.exports = function(grunt) {
         files: [{
           src: ['test/fixtures/main.js', 'test/fixtures/lib/external.js'],
           dest: 'tmp/mainfest.js'
+        }]
+      },
+      manifestmap: {
+        options: {
+          manifestPath: 'tmp/manifest/manifest.json',
+          manifestOptions: {
+            compress: false,
+            sourceMaps: true,
+            embedMappingComments: true
+          },
+          include: ['test/fixtures', 'test/fixtures/lib'],
+        },
+        files: [{
+          src: 'test/fixtures/main.css.less',
+          dest: 'tmp/main.css'
         }]
       },
       helpers: {
