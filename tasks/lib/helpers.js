@@ -67,6 +67,8 @@ exports.init = function (grunt) {
     [].concat(options.include).forEach(function (include) {
       environment.appendPath(include);
     });
+    environment.appendPath(path.dirname(src));
+    environment.appendPath(process.cwd());
 
     Object.keys(options.helpers).forEach(function (key) {
       // Create a bound function which has access to the current Mincer.Environment
@@ -101,7 +103,7 @@ exports.init = function (grunt) {
       return manifest.compile(resolvedAssets, options.manifestOptions);
     }
 
-    asset = environment.findAsset(path.basename(src));
+    asset = environment.findAsset(src);
     if (!asset) {
       grunt.fail.warn('Cannot find logical path ' + src.cyan);
     }

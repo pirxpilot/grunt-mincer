@@ -21,6 +21,11 @@ module.exports = function(grunt) {
           { src: 'test/fixtures/main.js', dest: 'tmp/', flatten: true, expand: true }
         ]
       },
+      relative: {
+        files: [
+          { src: 'test/fixtures/lib/external.js', dest: 'tmp/', flatten: true, expand: true }
+        ]
+      },
       full: {
         options: {
           include: ['test/fixtures', 'test/fixtures/lib']

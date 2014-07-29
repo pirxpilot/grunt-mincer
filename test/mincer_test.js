@@ -18,6 +18,16 @@ exports.mince = {
     test.done();
   },
 
+  'mince relative': function(test) {
+    test.expect(1);
+
+    var expected = "function external() {}\n;";
+    var actual = grunt.file.read('tmp/external.js').trim();
+    test.equal(expected, actual, 'should find files given with relative path');
+
+    test.done();
+  },
+
   'mince manifest': function(test) {
     test.expect(4);
 
