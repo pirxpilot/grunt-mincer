@@ -23,6 +23,7 @@ module.exports = function (grunt) {
         embedMappingComments: true
       },
       sourceMappingBaseURL: '',
+      sourceMappingURL: function (options, file) { return options.sourceMappingBaseURL + file.dest + '.map' },
       helpers: {},
       engines: {},
       jsCompressor: null,

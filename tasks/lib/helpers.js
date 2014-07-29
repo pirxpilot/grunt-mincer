@@ -177,10 +177,11 @@ exports.init = function (grunt) {
       });
 
       if([].concat(options.enable).indexOf('source_maps') > -1) {
+        var mapUrl = options.sourceMappingURL(options, file);
         if (/\.css$/.test(file.dest)) {
-          sourceNode.add('/*# sourceMappingURL=' + options.sourceMappingBaseURL + file.dest + '.map' + ' */');
+          sourceNode.add('/*# sourceMappingURL=' + mapUrl + ' */');
         } else {
-          sourceNode.add('//# sourceMappingURL=' + options.sourceMappingBaseURL + file.dest + '.map');
+          sourceNode.add('//# sourceMappingURL=' + mapUrl);
         }
       }
 

@@ -73,6 +73,10 @@ CSS compression function or predefined `mincer` css compressor identifier `"csso
 
 The base url to use when referencing source-maps in compiled assets. Defaults to `""` if not explicitly set.
 
+#### sourceMappingURL ```function(options, file)```
+
+Optional function that is called to determine the sourceMappingURL for a file. Has access to the grunt task options as well as the file object for current asset. By default returns the destination filename prefixed with the `sourceMappingBaseURL`
+
 ### Files
 
 The files on which the task operates can be defined using all the powerful options provided by Grunt.
