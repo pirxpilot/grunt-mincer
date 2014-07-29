@@ -1,4 +1,11 @@
 
+1.0.0-beta4 / 2014-07-29
+==================
+
+ * [FEATURE] Override sourceMappingURL with custom function
+ * [BUGFIX] Adjust for Mincer 1.1.2 map format
+ * [BUGFIX] Fix relative asset path handling
+
 1.0.0-beta3 / 2014-07-25
 ==================
 
