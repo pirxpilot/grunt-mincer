@@ -1,2 +1,2 @@
-)]}
+)]}'
 {"version":3,"sources":["test/fixtures/main.css.less"],"names":[],"mappings":"AACA;EAAO","sourcesContent":["@baseColor: #333;\nbody { color: @baseColor; }\n\n"],"sourceRoot":"/"}
