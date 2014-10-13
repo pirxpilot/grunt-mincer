@@ -67,7 +67,10 @@ exports.init = function (grunt) {
     [].concat(options.include).forEach(function (include) {
       environment.appendPath(include);
     });
-    environment.appendPath(path.dirname(src));
+    [].concat(src)
+      .map(function (src) { return path.dirname(src); })
+      .filter(arrayUnique)
+      .forEach(function (src) { environment.appendPath(src); });
     environment.appendPath(process.cwd());
 
     Object.keys(options.helpers).forEach(function (key) {
