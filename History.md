@@ -1,3 +1,7 @@
+1.0.0-rc1 / 2014-10-13
+==================
+
+ * [BUGFIX] Fix search paths in manifest mode
 
 1.0.0-beta4 / 2014-07-29
 ==================
