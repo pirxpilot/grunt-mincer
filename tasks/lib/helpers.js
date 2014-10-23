@@ -27,8 +27,8 @@ exports.init = function (grunt) {
 
     for (_i = 0, _len = environment.paths.length; _i < _len; _i++) {
       _path = environment.paths[_i];
-      if(_path.slice(-1, 1) !== '/') {
-        _path += '/';
+      if(_path.slice(-1, 1) !== path.sep) {
+        _path += path.sep;
       }
       if(resolvedFilename.slice(0, _path.length) === _path) {
         resolvedFilename = resolvedFilename.slice(_path.length);
