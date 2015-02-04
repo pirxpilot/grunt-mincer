@@ -1,3 +1,10 @@
+1.0.0 / 2015-02-04
+==================
+
+  * Fixes path seperator on windows.
+  * Update supported mincer and source-map versions
+  * Update development dependencies
+
 1.0.0-rc1 / 2014-10-13
 ==================
 

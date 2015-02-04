@@ -1,7 +1,7 @@
 {
   "name": "grunt-mincer",
   "description": "Use mincer to concatenate your sources.",
-  "version": "1.0.0-rc1",
+  "version": "1.0.0",
   "homepage": "https://github.com/pirxpilot/grunt-mincer",
   "author": {
     "name": "Damian Krzeminski",
