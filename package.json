@@ -38,7 +38,7 @@
     "grunt-contrib-jshint": "~0",
     "grunt-contrib-nodeunit": "~0",
     "grunt-contrib-watch": "~0",
-    "ejs": "~0",
+    "ejs": "^1.0",
     "less": "~2.3.0"
   },
   "peerDependencies": {
