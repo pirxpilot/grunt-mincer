@@ -39,7 +39,7 @@
     "grunt-contrib-nodeunit": "~0",
     "grunt-contrib-watch": "~0",
     "ejs": "~0",
-    "less": "~1.7.0"
+    "less": "~2.3.0"
   },
   "peerDependencies": {
     "grunt": "~0.4"
