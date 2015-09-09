@@ -12,10 +12,7 @@
     "name": "Damian Krzeminski",
     "email": "pirxpilot@code42day.com"
   }],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/pirxpilot/grunt-mincer.git"
-  },
+  "repository": "pirxpilot/grunt-mincer.git",
   "bugs": {
     "url": "https://github.com/pirxpilot/grunt-mincer/issues"
   },
