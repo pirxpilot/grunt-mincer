@@ -4,9 +4,14 @@
   "version": "1.0.0",
   "homepage": "https://github.com/pirxpilot/grunt-mincer",
   "author": {
+    "name": "Morton Jonuschat",
+    "email": "yabawock@gmail.com",
+    "url": "https://github.com/yabawock"
+  },
+  "contributors": [{
     "name": "Damian Krzeminski",
     "email": "pirxpilot@code42day.com"
-  },
+  }],
   "repository": {
     "type": "git",
     "url": "git://github.com/pirxpilot/grunt-mincer.git"
