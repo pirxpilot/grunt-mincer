@@ -1,4 +1,11 @@
 
+1.0.1 / 2015-09-09
+==================
+
+  * [TASK] Add support for mincer 1.3+
+  * [TASK] Test against node 0.12
+  * [TASK] Update license information / package.json
+
 1.0.0 / 2015-02-04
 ==================
 
