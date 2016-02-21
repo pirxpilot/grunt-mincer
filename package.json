@@ -8,10 +8,12 @@
     "email": "yabawock@gmail.com",
     "url": "https://github.com/yabawock"
   },
-  "contributors": [{
-    "name": "Damian Krzeminski",
-    "email": "pirxpilot@code42day.com"
-  }],
+  "contributors": [
+    {
+      "name": "Damian Krzeminski",
+      "email": "pirxpilot@code42day.com"
+    }
+  ],
   "repository": "pirxpilot/grunt-mincer.git",
   "bugs": {
     "url": "https://github.com/pirxpilot/grunt-mincer/issues"
@@ -39,7 +41,7 @@
     "less": "^2.3.0"
   },
   "peerDependencies": {
-    "grunt": "~0.4"
+    "grunt": ">=0.4.0"
   },
   "keywords": [
     "gruntplugin",
